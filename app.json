@@ -2,11 +2,16 @@
   "expo": {
     "name": "CRWN MVP",
     "slug": "crwn-mvp",
-    "sdkVersion": "48.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "updates": {
       "enabled": false
     }

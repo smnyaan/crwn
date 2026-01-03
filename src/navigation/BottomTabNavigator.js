@@ -50,7 +50,7 @@ export default function BottomTabNavigator() {
         options={{ tabBarLabel: '' }} // Only show icon
       />
       <Tab.Screen name="Notifications" component={NotificationsScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

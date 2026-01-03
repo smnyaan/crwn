@@ -1,28 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-// PostCard: Individual post component showing image, description, and interactions
 export default function PostCard({ post }) {
-  // Example post structure - replace with real data
+  const [liked, setLiked] = useState(false);
+  const [bookmarked, setBookmarked] = useState(false);
+
   const examplePost = {
     id: '1',
     image: 'placeholder.jpg',
-    description: 'Love this new style! 💇‍♀️✨',
-    stylist: 'Sarah Style',
-    likes: 128,
-    comments: 24
+    description: 'Natural curls styled for everyday elegance ✨',
+    stylist: 'CurlSpecialist',
+    likes: 245,
+    comments: 42
   };
 
-  const { image, description, stylist, likes, comments } = post || examplePost;
+  const { image, description, stylist, likes, comments, imageSource } = post || examplePost;
 
   return (
     <View style={styles.container}>
       {/* Post Image */}
       <View style={styles.imageContainer}>
-        {post.imageSource ? (
+        {imageSource ? (
           <Image
-            source={post.imageSource}
+            source={imageSource}
             style={styles.image}
             resizeMode="cover"
           />
@@ -31,22 +32,40 @@ export default function PostCard({ post }) {
         )}
       </View>
 
-      {/* Description and Stylist */}
+      {/* Content */}
       <View style={styles.content}>
         <Text style={styles.description}>{description}</Text>
-        <Text style={styles.stylist}>Stylist: {stylist}</Text>
+        <Text style={styles.stylist}>Stylist: <Text style={styles.stylistName}>{stylist}</Text></Text>
       </View>
 
-      {/* Interaction Buttons */}
+      {/* Actions */}
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="heart-outline" size={24} color="#666" />
-          <Text style={styles.actionText}>{likes}</Text>
+        <TouchableOpacity 
+          style={styles.actionButton}
+          onPress={() => setLiked(!liked)}
+        >
+          <Ionicons 
+            name={liked ? "heart" : "heart-outline"} 
+            size={22} 
+            color={liked ? "#ef4444" : "#6b7280"} 
+          />
+          <Text style={styles.actionText}>{liked ? likes + 1 : likes}</Text>
         </TouchableOpacity>
         
         <TouchableOpacity style={styles.actionButton}>
-          <Ionicons name="chatbubble-outline" size={24} color="#666" />
+          <Ionicons name="chatbubble-outline" size={22} color="#6b7280" />
           <Text style={styles.actionText}>{comments}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.actionButton, styles.bookmarkButton]}
+          onPress={() => setBookmarked(!bookmarked)}
+        >
+          <Ionicons 
+            name={bookmarked ? "bookmark" : "bookmark-outline"} 
+            size={22} 
+            color={bookmarked ? "#3b82f6" : "#6b7280"} 
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -57,13 +76,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
     marginBottom: 16,
-    borderRadius: 12,
-    overflow: 'hidden',
-    marginHorizontal: 16
+    borderRadius: 0,
+    overflow: 'hidden'
   },
   imageContainer: {
     width: '100%',
-    height: 300
+    height: 400
   },
   imagePlaceholder: {
     backgroundColor: '#e5e7eb',
@@ -75,30 +93,41 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   content: {
-    padding: 16
+    padding: 16,
+    paddingBottom: 12
   },
   description: {
-    fontSize: 16,
-    marginBottom: 8
+    fontSize: 15,
+    marginBottom: 8,
+    color: '#111827',
+    lineHeight: 20
   },
   stylist: {
     fontSize: 14,
-    color: '#2563eb',
+    color: '#6b7280'
+  },
+  stylistName: {
+    color: '#3b82f6',
     fontWeight: '500'
   },
   actions: {
     flexDirection: 'row',
-    borderTopWidth: 1,
-    borderTopColor: '#e5e7eb',
-    padding: 12
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+    alignItems: 'center'
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     marginRight: 20
   },
+  bookmarkButton: {
+    marginLeft: 'auto',
+    marginRight: 0
+  },
   actionText: {
-    marginLeft: 4,
-    color: '#666'
+    marginLeft: 6,
+    color: '#6b7280',
+    fontSize: 14
   }
 });
